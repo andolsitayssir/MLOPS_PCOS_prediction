@@ -1,5 +1,4 @@
 mlops_pcos/
-__pycache__/
-*.pyc
-data/raw/
+
 *.log
+

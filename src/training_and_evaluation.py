@@ -8,7 +8,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, classification_report, mean_squared_error
 from sklearn.model_selection import GridSearchCV, cross_val_score
 import mlflow
+import mlflow.sklearn
 import os
+import yaml
+
+def load_params():
+    with open("params.yaml", "r") as f:
+        return yaml.safe_load(f)
 
 def load_data():
     X_train = pd.read_csv("data/processed/pcos_train.csv").values
@@ -17,36 +23,36 @@ def load_data():
     y_test = pd.read_csv("data/processed/pcos_y_test.csv").values.ravel()
     return X_train, X_test, y_train, y_test
 
-def train_random_forest(X_train, y_train):
+def train_random_forest(X_train, y_train, params):
     param_grid = {
-        'n_estimators': [100, 200],
-        'max_depth': [5, 10],
-        'min_samples_split': [2, 5],
-        'min_samples_leaf': [1, 2]
+        'n_estimators': params['rf_n_estimators'],
+        'max_depth': params['rf_max_depth'],
+        'min_samples_split': params['rf_min_samples_split'],
+        'min_samples_leaf': params['rf_min_samples_leaf']
     }
-    rf = RandomForestClassifier(random_state=42)
-    grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='f1', n_jobs=-1)
+    rf = RandomForestClassifier(random_state=params['rf_random_state'])
+    grid_search = GridSearchCV(rf, param_grid, cv=params['cv_folds'], scoring='f1', n_jobs=-1)
     grid_search.fit(X_train, y_train)
     best_rf = grid_search.best_estimator_
-    cv_score = cross_val_score(best_rf, X_train, y_train, cv=5, scoring='f1').mean()
+    cv_score = cross_val_score(best_rf, X_train, y_train, cv=params['cv_folds'], scoring='f1').mean()
     return best_rf, grid_search.best_params_, cv_score
 
-def train_logistic_regression(X_train, y_train):
-    lg = LogisticRegression(max_iter=1000, random_state=0)
+def train_logistic_regression(X_train, y_train, params):
+    lg = LogisticRegression(max_iter=params['lg_max_iter'], random_state=params['lg_random_state'])
     lg.fit(X_train, y_train)
-    cv_score = cross_val_score(lg, X_train, y_train, cv=5, scoring='f1').mean()
+    cv_score = cross_val_score(lg, X_train, y_train, cv=params['cv_folds'], scoring='f1').mean()
     return lg, cv_score
 
-def train_svm(X_train, y_train):
-    svm = SVC(kernel='linear', probability=True, random_state=0)
+def train_svm(X_train, y_train, params):
+    svm = SVC(kernel=params['svm_kernel'], probability=params['svm_probability'], random_state=params['svm_random_state'])
     svm.fit(X_train, y_train)
-    cv_score = cross_val_score(svm, X_train, y_train, cv=5, scoring='f1').mean()
+    cv_score = cross_val_score(svm, X_train, y_train, cv=params['cv_folds'], scoring='f1').mean()
     return svm, cv_score
 
-def train_knn(X_train, y_train):
-    knn = KNeighborsClassifier(n_neighbors=20)
+def train_knn(X_train, y_train, params):
+    knn = KNeighborsClassifier(n_neighbors=params['knn_n_neighbors'])
     knn.fit(X_train, y_train)
-    cv_score = cross_val_score(knn, X_train, y_train, cv=5, scoring='f1').mean()
+    cv_score = cross_val_score(knn, X_train, y_train, cv=params['cv_folds'], scoring='f1').mean()
     return knn, cv_score
 
 def evaluate_model(model, X_test, y_test, name):
@@ -71,11 +77,12 @@ def save_model(model, name):
     return path
 
 def main():
+    params = load_params()['model_training']
     X_train, X_test, y_train, y_test = load_data()
     mlflow.set_experiment("PCOS_Model_Training")
     with mlflow.start_run(run_name="model_training"):
         # Random Forest
-        best_rf, rf_params, rf_cv = train_random_forest(X_train, y_train)
+        best_rf, rf_params, rf_cv = train_random_forest(X_train, y_train, params)
         mlflow.log_params({f"rf_{k}": v for k, v in rf_params.items()})
         mlflow.log_metric("rf_cv_f1", rf_cv)
         acc_rf, f1_rf, roc_auc_rf, mse_rf, rmse_rf = evaluate_model(best_rf, X_test, y_test, "Random Forest")
@@ -87,9 +94,10 @@ def main():
             mlflow.log_metric("rf_roc_auc", roc_auc_rf)
         rf_path = save_model(best_rf, "best_rf")
         mlflow.log_artifact(rf_path)
+        mlflow.sklearn.log_model(best_rf, "best_rf")
 
         # Logistic Regression
-        lg, lg_cv = train_logistic_regression(X_train, y_train)
+        lg, lg_cv = train_logistic_regression(X_train, y_train, params)
         mlflow.log_metric("lg_cv_f1", lg_cv)
         acc_lg, f1_lg, roc_auc_lg, mse_lg, rmse_lg = evaluate_model(lg, X_test, y_test, "Logistic Regression")
         mlflow.log_metric("lg_accuracy", acc_lg)
@@ -100,9 +108,10 @@ def main():
             mlflow.log_metric("lg_roc_auc", roc_auc_lg)
         lg_path = save_model(lg, "lg")
         mlflow.log_artifact(lg_path)
+        mlflow.sklearn.log_model(lg, "lg")
 
         # SVM
-        svm, svm_cv = train_svm(X_train, y_train)
+        svm, svm_cv = train_svm(X_train, y_train, params)
         mlflow.log_metric("svm_cv_f1", svm_cv)
         acc_svm, f1_svm, roc_auc_svm, mse_svm, rmse_svm = evaluate_model(svm, X_test, y_test, "SVM")
         mlflow.log_metric("svm_accuracy", acc_svm)
@@ -113,9 +122,10 @@ def main():
             mlflow.log_metric("svm_roc_auc", roc_auc_svm)
         svm_path = save_model(svm, "svm")
         mlflow.log_artifact(svm_path)
+        mlflow.sklearn.log_model(svm, "svm")
 
         # KNN
-        knn, knn_cv = train_knn(X_train, y_train)
+        knn, knn_cv = train_knn(X_train, y_train, params)
         mlflow.log_metric("knn_cv_f1", knn_cv)
         acc_knn, f1_knn, roc_auc_knn, mse_knn, rmse_knn = evaluate_model(knn, X_test, y_test, "KNN")
         mlflow.log_metric("knn_accuracy", acc_knn)
@@ -126,6 +136,7 @@ def main():
             mlflow.log_metric("knn_roc_auc", roc_auc_knn)
         knn_path = save_model(knn, "knn")
         mlflow.log_artifact(knn_path)
+        mlflow.sklearn.log_model(knn, "knn")
 
 if __name__ == "__main__":
     main()

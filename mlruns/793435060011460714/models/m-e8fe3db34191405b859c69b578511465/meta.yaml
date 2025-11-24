@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Bureau/pcos_prediction_mlops/mlruns/793435060011460714/models/m-e8fe3db34191405b859c69b578511465/artifacts
+creation_timestamp: 1763975723761
+experiment_id: '793435060011460714'
+last_updated_timestamp: 1763975726709
+model_id: m-e8fe3db34191405b859c69b578511465
+model_type: null
+name: lg
+source_run_id: 27206bb3dd5f41068bd0681a975cdb03
+status: 2
+status_message: null

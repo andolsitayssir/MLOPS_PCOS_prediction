@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Bureau/pcos_prediction_mlops/mlruns/321960444162256441/56ac8136399441e1895da91799b381f5/artifacts
+end_time: 1763973675613
+entry_point_name: ''
+experiment_id: '321960444162256441'
+lifecycle_stage: active
+run_id: 56ac8136399441e1895da91799b381f5
+run_name: data_cleaning
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763973675028
+status: 3
+tags: []
+user_id: lando

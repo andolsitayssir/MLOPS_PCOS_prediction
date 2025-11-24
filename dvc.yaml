@@ -35,6 +35,7 @@ stages:
         - app/models/knn.pkl
         - app/models/lg.pkl
         - app/models/svm.pkl
+        
 
 
 

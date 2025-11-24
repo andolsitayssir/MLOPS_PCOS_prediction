@@ -44,7 +44,7 @@ def main():
         X_scaled = scaler.fit_transform(X_resampled)
         pca = PCA(n_components=0.95)
         X_pca = pca.fit_transform(X_scaled)
-        out_path = "data/processed/pcos_proc.csv"
+        out_path = "data/processed/pcos_processed.csv"
         pd.DataFrame(X_pca).to_csv(out_path, index=False)
         mlflow.log_artifact(out_path)
         joblib.dump({"scaler": scaler, "pca": pca, "top_features": top_features}, "app/models/preprocessing.pkl", compress=3)

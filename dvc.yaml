@@ -1,0 +1,19 @@
+stages:
+  data_processing:
+    cmd: python src/processing.py
+    deps:
+      - src/data_processing.py
+      - data/raw/PCOS_data_without_infertility.xlsx
+      - params.yaml
+    outs:
+      - data/processed/pcos_processed.csv
+
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+      - src/feature_engineering.py
+      - data/processed/pcos_processed.csv
+      - params.yaml
+    outs:
+      - data/processed/pcos_proc.csv
+      - app/models/preprocessing.pkl

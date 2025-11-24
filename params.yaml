@@ -1,0 +1,5 @@
+
+feature_engineering:
+  corr_threshold: 0.2
+  smote_random_state: 42
+  pca_variance: 0.95

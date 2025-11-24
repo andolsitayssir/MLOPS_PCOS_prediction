@@ -2,7 +2,7 @@ stages:
   data_processing:
     cmd: python src/processing.py
     deps:
-      - src/data_processing.py
+      - src/processing.py
       - data/raw/PCOS_data_without_infertility.xlsx
       - params.yaml
     outs:
@@ -15,5 +15,27 @@ stages:
       - data/processed/pcos_processed.csv
       - params.yaml
     outs:
-      - data/processed/pcos_proc.csv
+      - data/processed/pcos_train.csv
+      - data/processed/pcos_test.csv
+      - data/processed/pcos_y_train.csv
+      - data/processed/pcos_y_test.csv
       - app/models/preprocessing.pkl
+
+  train_and_evaluation:
+     cmd: python src/training_and_evaluation.py
+     deps:
+        - src/training_and_evaluation.py
+        - data/processed/pcos_train.csv
+        - data/processed/pcos_y_train.csv
+        - data/processed/pcos_test.csv
+        - data/processed/pcos_y_test.csv
+        - params.yaml  
+     outs:
+        - app/models/best_rf.pkl
+        - app/models/knn.pkl
+        - app/models/lg.pkl
+        - app/models/svm.pkl
+
+
+
+       

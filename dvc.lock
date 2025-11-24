@@ -1,0 +1,58 @@
+schema: '2.0'
+stages:
+  data_processing:
+    cmd: python src/processing.py
+    deps:
+    - path: data/raw/PCOS_data_without_infertility.xlsx
+      hash: md5
+      md5: 89427c930767c314a0a69387c51672ba
+      size: 125274
+    - path: params.yaml
+      hash: md5
+      md5: 7f8799c3fddd11b02516a70fb96d266f
+      size: 93
+    - path: src/processing.py
+      hash: md5
+      md5: e8eed8cf5107894111a2ec76c29ca1b2
+      size: 2178
+    outs:
+    - path: data/processed/pcos_processed.csv
+      hash: md5
+      md5: e5a196d3838045eb86d629a9b35a8573
+      size: 95172
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/pcos_processed.csv
+      hash: md5
+      md5: e5a196d3838045eb86d629a9b35a8573
+      size: 95172
+    - path: params.yaml
+      hash: md5
+      md5: 7f8799c3fddd11b02516a70fb96d266f
+      size: 93
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 61ae3b9963c193de49d5424d7a951be0
+      size: 3163
+    outs:
+    - path: app/models/preprocessing.pkl
+      hash: md5
+      md5: e592a0422decf2855f44d257586c2cef
+      size: 1776
+    - path: data/processed/pcos_test.csv
+      hash: md5
+      md5: 40f7916ab298ed1e49bbc42e4bc900f4
+      size: 20701
+    - path: data/processed/pcos_train.csv
+      hash: md5
+      md5: f90151fc22bcd05682a584bdf4962449
+      size: 82652
+    - path: data/processed/pcos_y_test.csv
+      hash: md5
+      md5: a0b6edfcdda8767d831ffd7be477f474
+      size: 450
+    - path: data/processed/pcos_y_train.csv
+      hash: md5
+      md5: 8657292a5b335ef0bdb7248c0f2bf31e
+      size: 1758

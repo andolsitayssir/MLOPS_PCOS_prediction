@@ -7,14 +7,10 @@ stages:
       hash: md5
       md5: 89427c930767c314a0a69387c51672ba
       size: 125274
-    - path: params.yaml
-      hash: md5
-      md5: 7bf02983943cda1d83fdb3e58d0ec808
-      size: 451
     - path: src/processing.py
       hash: md5
-      md5: e8eed8cf5107894111a2ec76c29ca1b2
-      size: 2178
+      md5: 070d0d116124734271ae72fdab377405
+      size: 1985
     outs:
     - path: data/processed/pcos_processed.csv
       hash: md5
@@ -81,8 +77,8 @@ stages:
       size: 451
     - path: src/training_and_evaluation.py
       hash: md5
-      md5: 30494a8000725464aa590301dd161e04
-      size: 6272
+      md5: 2f0f266f296774a0cd0e10e6cf54602a
+      size: 6809
     outs:
     - path: app/models/best_rf.pkl
       hash: md5
@@ -100,3 +96,7 @@ stages:
       hash: md5
       md5: 42e92b97a58a7e49d4efca2c36d794ee
       size: 10478
+    - path: metrics.json
+      hash: md5
+      md5: 6e00842742eaf29a12fe0523d2599f20
+      size: 484

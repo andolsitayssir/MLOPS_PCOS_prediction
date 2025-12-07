@@ -2,3 +2,4 @@ mlops_pcos/
 
 *.log
 
+/metrics.json

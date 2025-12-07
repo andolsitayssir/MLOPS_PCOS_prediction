@@ -4,7 +4,7 @@ stages:
     deps:
       - src/processing.py
       - data/raw/PCOS_data_without_infertility.xlsx
-      - params.yaml
+     
     outs:
       - data/processed/pcos_processed.csv
 
@@ -15,12 +15,13 @@ stages:
       - data/processed/pcos_processed.csv
       - params.yaml
     outs:
+      
       - data/processed/pcos_train.csv
       - data/processed/pcos_test.csv
       - data/processed/pcos_y_train.csv
       - data/processed/pcos_y_test.csv
       - app/models/preprocessing.pkl
-
+   
   train_and_evaluation:
      cmd: python src/training_and_evaluation.py
      deps:
@@ -35,7 +36,9 @@ stages:
         - app/models/knn.pkl
         - app/models/lg.pkl
         - app/models/svm.pkl
-        
+     metrics:
+        - metrics.json 
+   
 
 
 

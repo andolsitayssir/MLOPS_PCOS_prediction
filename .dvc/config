@@ -1,0 +1,5 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://pcos-mlops-data/dvc-storage
+    region = us-east-1

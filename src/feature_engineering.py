@@ -54,7 +54,7 @@ def main():
         pca = PCA(n_components=0.95)
         X_train_pca = pca.fit_transform(X_train_scaled)
         X_test_pca = pca.transform(X_test_scaled)
-
+        
         # Save processed train and test sets
         pd.DataFrame(X_train_pca).to_csv("data/processed/pcos_train.csv", index=False)
         pd.DataFrame(X_test_pca).to_csv("data/processed/pcos_test.csv", index=False)

@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Bureau/pcos_prediction_mlops/mlruns/793435060011460714/models/m-baee20b74cde4e2f997bf9fa8f34fb33/artifacts
+creation_timestamp: 1764002127169
+experiment_id: '793435060011460714'
+last_updated_timestamp: 1764002137426
+model_id: m-baee20b74cde4e2f997bf9fa8f34fb33
+model_type: null
+name: best_rf
+source_run_id: fdc414b5f50245f18718eeecd55fa0c8
+status: 2
+status_message: null

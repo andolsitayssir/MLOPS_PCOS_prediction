@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Bureau/pcos_prediction_mlops/mlruns/793435060011460714/models/m-158391aed450406091f94b9d02122fa4/artifacts
+creation_timestamp: 1764002280471
+experiment_id: '793435060011460714'
+last_updated_timestamp: 1764002283590
+model_id: m-158391aed450406091f94b9d02122fa4
+model_type: null
+name: svm
+source_run_id: 99c0fa0a9e834fa7a74b27b7fef72439
+status: 2
+status_message: null

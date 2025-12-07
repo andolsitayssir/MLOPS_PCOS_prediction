@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+joblib
+mlflow
+dvc
+imbalanced-learn
+seaborn
+matplotlib
+pyyaml

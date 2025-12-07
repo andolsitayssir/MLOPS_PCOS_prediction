@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Bureau/pcos_prediction_mlops/mlruns/793435060011460714/models/m-33a595f35c8b4a63bfbf539acc8b4302/artifacts
+creation_timestamp: 1764002145268
+experiment_id: '793435060011460714'
+last_updated_timestamp: 1764002148440
+model_id: m-33a595f35c8b4a63bfbf539acc8b4302
+model_type: null
+name: knn
+source_run_id: fdc414b5f50245f18718eeecd55fa0c8
+status: 2
+status_message: null

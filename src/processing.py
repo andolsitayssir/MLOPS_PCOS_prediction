@@ -19,16 +19,12 @@ def load_data(filepath, sheet_name):
 def clean_data(data):
     logger.info("Nettoyage des colonnes inutiles et doublons")
     data.drop(["Unnamed: 44", "Sl. No", "Patient File No."], axis=1, inplace=True, errors="ignore")
-    data = data.drop_duplicates()
     return data
 
 def impute_missing(data):
     logger.info("Imputation des valeurs manquantes")
     if data["Marraige Status (Yrs)"].isnull().any():
         data["Marraige Status (Yrs)"] = data["Marraige Status (Yrs)"].fillna(data["Marraige Status (Yrs)"].mean())
-    for col in ["AMH(ng/mL)", "II    beta-HCG(mIU/mL)"]:
-        if col in data.columns:
-            data[col] = pd.to_numeric(data[col], errors="coerce")
     return data
 
 def categorical_to_numeric(data):

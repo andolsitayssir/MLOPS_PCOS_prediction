@@ -11,6 +11,7 @@ import mlflow
 import mlflow.sklearn
 import os
 import yaml
+import json
 
 def load_params():
     with open("params.yaml", "r") as f:
@@ -137,6 +138,23 @@ def main():
         knn_path = save_model(knn, "knn")
         mlflow.log_artifact(knn_path)
         mlflow.sklearn.log_model(knn, "knn")
+        
+        metrics = {
+        "rf_accuracy": acc_rf,
+        "rf_f1_score": f1_rf,
+        "rf_roc_auc": roc_auc_rf,
+        "lg_accuracy": acc_lg,
+        "lg_f1_score": f1_lg,
+        "lg_roc_auc": roc_auc_lg,
+        "svm_accuracy": acc_svm,
+        "svm_f1_score": f1_svm,
+        "svm_roc_auc": roc_auc_svm,
+        "knn_accuracy": acc_knn,
+        "knn_f1_score": f1_knn,
+        "knn_roc_auc": roc_auc_knn
+    }
+    with open("metrics.json", "w") as f:
+        json.dump(metrics, f, indent=4)
 
 if __name__ == "__main__":
     main()

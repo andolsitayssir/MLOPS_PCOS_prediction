@@ -1,5 +1,5 @@
 [core]
-    remote = myremote
-['remote "myremote"']
-    url = s3://pcos-mlops-data/dvc-storage
-    region = us-east-1
+    remote = origin
+['remote "origin"']
+    url = s3://pcos_mlops
+    endpointurl = https://dagshub.com/api/v1/repo-buckets/s3/andolsitayssir

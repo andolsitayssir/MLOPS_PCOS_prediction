@@ -1,9 +1,8 @@
-
 feature_engineering:
   corr_threshold: 0.2
   smote_random_state: 42
   pca_variance: 0.95
-  test_size: 0.2
+  test_size: 0.15  # 15% test, 15% validation, 70% train
   split_random_state: 42
 
 model_training:
@@ -19,3 +18,4 @@ model_training:
   svm_random_state: 0
   knn_n_neighbors: 20
   cv_folds: 5
+  primary_metric: "f1_score"

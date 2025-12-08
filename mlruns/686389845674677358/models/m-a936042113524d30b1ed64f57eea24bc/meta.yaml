@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Bureau/pcos_prediction_mlops/mlruns/686389845674677358/models/m-a936042113524d30b1ed64f57eea24bc/artifacts
+creation_timestamp: 1765173232417
+experiment_id: '686389845674677358'
+last_updated_timestamp: 1765173235408
+model_id: m-a936042113524d30b1ed64f57eea24bc
+model_type: null
+name: model
+source_run_id: 8d890478a2154df4b76886aaccf66739
+status: 2
+status_message: null

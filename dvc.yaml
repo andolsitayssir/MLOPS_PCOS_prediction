@@ -4,7 +4,6 @@ stages:
     deps:
       - src/processing.py
       - data/raw/PCOS_data_without_infertility.xlsx
-     
     outs:
       - data/processed/pcos_processed.csv
 
@@ -14,32 +13,43 @@ stages:
       - src/feature_engineering.py
       - data/processed/pcos_processed.csv
       - params.yaml
+    params:
+      - feature_engineering
     outs:
-      
       - data/processed/pcos_train.csv
+      - data/processed/pcos_val.csv
       - data/processed/pcos_test.csv
       - data/processed/pcos_y_train.csv
+      - data/processed/pcos_y_val.csv
       - data/processed/pcos_y_test.csv
       - app/models/preprocessing.pkl
-   
-  train_and_evaluation:
-     cmd: python src/training_and_evaluation.py
-     deps:
-        - src/training_and_evaluation.py
-        - data/processed/pcos_train.csv
-        - data/processed/pcos_y_train.csv
-        - data/processed/pcos_test.csv
-        - data/processed/pcos_y_test.csv
-        - params.yaml  
-     outs:
-        - app/models/best_rf.pkl
-        - app/models/knn.pkl
-        - app/models/lg.pkl
-        - app/models/svm.pkl
-     metrics:
-        - metrics.json 
-   
 
+  train_validation:
+    cmd: python src/train_validation.py
+    deps:
+      - src/train_validation.py
+      - data/processed/pcos_train.csv
+      - data/processed/pcos_val.csv
+      - data/processed/pcos_y_train.csv
+      - data/processed/pcos_y_val.csv
+      - params.yaml
+    params:
+      - model_training
+    outs:
+      - models/candidates/
+    metrics:
+      - metrics/validation_metrics.json
+      - metrics/best_model_info.json
 
-
-       
+  final_test:
+    cmd: python src/final_test.py
+    deps:
+      - src/final_test.py
+      - models/candidates/
+      - metrics/best_model_info.json
+      - data/processed/pcos_test.csv
+      - data/processed/pcos_y_test.csv
+    outs:
+      - app/models/best_model.pkl
+    metrics:
+      - metrics/final_test_metrics.json 

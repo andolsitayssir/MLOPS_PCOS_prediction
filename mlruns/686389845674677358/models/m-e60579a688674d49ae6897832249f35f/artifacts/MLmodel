@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Bureau/pcos_prediction_mlops/mlruns/686389845674677358/models/m-e60579a688674d49ae6897832249f35f/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.6.0
+model_id: m-e60579a688674d49ae6897832249f35f
+model_size_bytes: 42159
+model_uuid: m-e60579a688674d49ae6897832249f35f
+prompts: null
+run_id: 3fbe0d32283b4c8a91b64ae5e67f77a2
+utc_time_created: '2025-12-08 05:57:41.211056'

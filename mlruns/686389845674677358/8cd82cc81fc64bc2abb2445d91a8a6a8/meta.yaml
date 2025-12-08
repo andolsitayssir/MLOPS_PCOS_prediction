@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Bureau/pcos_prediction_mlops/mlruns/686389845674677358/8cd82cc81fc64bc2abb2445d91a8a6a8/artifacts
+end_time: 1765173461070
+entry_point_name: ''
+experiment_id: '686389845674677358'
+lifecycle_stage: active
+run_id: 8cd82cc81fc64bc2abb2445d91a8a6a8
+run_name: SVM_Validation
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765173458032
+status: 3
+tags: []
+user_id: lando

@@ -1,20 +1,18 @@
-FROM python:3.10-slim
-
-LABEL stage="training"
+FROM python:3.9-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y build-essential git && rm -rf /var/lib/apt/lists/*
+# Install git and dvc dependencies
+RUN apt-get update && apt-get install -y git
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/ .src/
-COPY data/ ./data/
-COPY app/models/ ./app/models
+# Copy all code
+COPY . .
 
-COPY params.yaml .
+# Initialize DVC (if needed, but usually we mount the .dvc folder)
+# We expect the user to mount the volume or we copy everything
+# output: "Ready to repro"
 
-VOLUME ["/app/models"]
-
-CMD ["python", "src/training_and_evaluation.py"]
+CMD ["dvc", "repro"]

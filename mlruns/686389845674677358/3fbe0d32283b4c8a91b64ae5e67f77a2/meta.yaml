@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Bureau/pcos_prediction_mlops/mlruns/686389845674677358/3fbe0d32283b4c8a91b64ae5e67f77a2/artifacts
+end_time: 1765173464173
+entry_point_name: ''
+experiment_id: '686389845674677358'
+lifecycle_stage: active
+run_id: 3fbe0d32283b4c8a91b64ae5e67f77a2
+run_name: KNN_Validation
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765173461077
+status: 3
+tags: []
+user_id: lando

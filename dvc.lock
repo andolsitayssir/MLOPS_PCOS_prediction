@@ -1,57 +1,5 @@
 schema: '2.0'
 stages:
-  data_processing:
-    cmd: python src/processing.py
-    deps:
-    - path: data/raw/PCOS_data_without_infertility.xlsx
-      hash: md5
-      md5: 89427c930767c314a0a69387c51672ba
-      size: 125274
-    - path: src/processing.py
-      hash: md5
-      md5: 070d0d116124734271ae72fdab377405
-      size: 1985
-    outs:
-    - path: data/processed/pcos_processed.csv
-      hash: md5
-      md5: e5a196d3838045eb86d629a9b35a8573
-      size: 95172
-  feature_engineering:
-    cmd: python src/feature_engineering.py
-    deps:
-    - path: data/processed/pcos_processed.csv
-      hash: md5
-      md5: e5a196d3838045eb86d629a9b35a8573
-      size: 95172
-    - path: params.yaml
-      hash: md5
-      md5: 7bf02983943cda1d83fdb3e58d0ec808
-      size: 451
-    - path: src/feature_engineering.py
-      hash: md5
-      md5: 61ae3b9963c193de49d5424d7a951be0
-      size: 3163
-    outs:
-    - path: app/models/preprocessing.pkl
-      hash: md5
-      md5: e592a0422decf2855f44d257586c2cef
-      size: 1776
-    - path: data/processed/pcos_test.csv
-      hash: md5
-      md5: 40f7916ab298ed1e49bbc42e4bc900f4
-      size: 20701
-    - path: data/processed/pcos_train.csv
-      hash: md5
-      md5: f90151fc22bcd05682a584bdf4962449
-      size: 82652
-    - path: data/processed/pcos_y_test.csv
-      hash: md5
-      md5: a0b6edfcdda8767d831ffd7be477f474
-      size: 450
-    - path: data/processed/pcos_y_train.csv
-      hash: md5
-      md5: 8657292a5b335ef0bdb7248c0f2bf31e
-      size: 1758
   train_and_evaluation:
     cmd: python src/training_and_evaluation.py
     deps:
@@ -100,3 +48,169 @@ stages:
       hash: md5
       md5: 6e00842742eaf29a12fe0523d2599f20
       size: 484
+  data_processing:
+    cmd: python src/processing.py
+    deps:
+    - path: data/raw/PCOS_data_without_infertility.xlsx
+      hash: md5
+      md5: 89427c930767c314a0a69387c51672ba
+      size: 125274
+    - path: src/processing.py
+      hash: md5
+      md5: 070d0d116124734271ae72fdab377405
+      size: 1985
+    outs:
+    - path: data/processed/pcos_processed.csv
+      hash: md5
+      md5: e5a196d3838045eb86d629a9b35a8573
+      size: 95172
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/pcos_processed.csv
+      hash: md5
+      md5: e5a196d3838045eb86d629a9b35a8573
+      size: 95172
+    - path: params.yaml
+      hash: md5
+      md5: 8c3c1e808449ae7ed3731eb0138c0df5
+      size: 521
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: cce48a6b3fdd652f3c933dcbee7a9af6
+      size: 5756
+    params:
+      params.yaml:
+        feature_engineering:
+          corr_threshold: 0.2
+          smote_random_state: 42
+          pca_variance: 0.95
+          test_size: 0.15
+          split_random_state: 42
+    outs:
+    - path: app/models/preprocessing.pkl
+      hash: md5
+      md5: 346648467e3d88456551a218a2ed2f65
+      size: 1767
+    - path: data/processed/pcos_test.csv
+      hash: md5
+      md5: 2c66f58bae6bf4f407bccc9c72538884
+      size: 11647
+    - path: data/processed/pcos_train.csv
+      hash: md5
+      md5: 12f21a45bf8f926315f92ba0846e91c9
+      size: 72057
+    - path: data/processed/pcos_val.csv
+      hash: md5
+      md5: 5db4d86e7003374bce82512925cd47df
+      size: 11536
+    - path: data/processed/pcos_y_test.csv
+      hash: md5
+      md5: 19d1be6d9518ecf77fd559f849e7bf76
+      size: 258
+    - path: data/processed/pcos_y_train.csv
+      hash: md5
+      md5: af48f8ebfd86c27ab755dd291e34e657
+      size: 1536
+    - path: data/processed/pcos_y_val.csv
+      hash: md5
+      md5: a668952cd7c47ced2c7878d495a5e96a
+      size: 255
+  train_validation:
+    cmd: python src/train_validation.py
+    deps:
+    - path: data/processed/pcos_train.csv
+      hash: md5
+      md5: 12f21a45bf8f926315f92ba0846e91c9
+      size: 72057
+    - path: data/processed/pcos_val.csv
+      hash: md5
+      md5: 5db4d86e7003374bce82512925cd47df
+      size: 11536
+    - path: data/processed/pcos_y_train.csv
+      hash: md5
+      md5: af48f8ebfd86c27ab755dd291e34e657
+      size: 1536
+    - path: data/processed/pcos_y_val.csv
+      hash: md5
+      md5: a668952cd7c47ced2c7878d495a5e96a
+      size: 255
+    - path: params.yaml
+      hash: md5
+      md5: 8c3c1e808449ae7ed3731eb0138c0df5
+      size: 521
+    - path: src/train_validation.py
+      hash: md5
+      md5: a43fd99598eaf1407af4d760946893f9
+      size: 6720
+    params:
+      params.yaml:
+        model_training:
+          rf_n_estimators:
+          - 100
+          - 200
+          rf_max_depth:
+          - 5
+          - 10
+          rf_min_samples_split:
+          - 2
+          - 5
+          rf_min_samples_leaf:
+          - 1
+          - 2
+          rf_random_state: 42
+          lg_max_iter: 1000
+          lg_random_state: 0
+          svm_kernel: linear
+          svm_probability: true
+          svm_random_state: 0
+          knn_n_neighbors: 20
+          cv_folds: 5
+          primary_metric: f1_score
+    outs:
+    - path: metrics/best_model_info.json
+      hash: md5
+      md5: d13b9a2e0b99d5ce4788ed4583832301
+      size: 752
+    - path: metrics/validation_metrics.json
+      hash: md5
+      md5: 9cd4256b03aec5edf9101aa8d3c8ba47
+      size: 570
+    - path: models/candidates/
+      hash: md5
+      md5: fd7a43362d38f7b84af2c9e994b4672e.dir
+      size: 1235753
+      nfiles: 4
+  final_test:
+    cmd: python src/final_test.py
+    deps:
+    - path: data/processed/pcos_test.csv
+      hash: md5
+      md5: 2c66f58bae6bf4f407bccc9c72538884
+      size: 11647
+    - path: data/processed/pcos_y_test.csv
+      hash: md5
+      md5: 19d1be6d9518ecf77fd559f849e7bf76
+      size: 258
+    - path: metrics/best_model_info.json
+      hash: md5
+      md5: d13b9a2e0b99d5ce4788ed4583832301
+      size: 752
+    - path: models/candidates/
+      hash: md5
+      md5: fd7a43362d38f7b84af2c9e994b4672e.dir
+      size: 1235753
+      nfiles: 4
+    - path: src/final_test.py
+      hash: md5
+      md5: d1ed639fc7e487b74f36120d3f9e0a9e
+      size: 2972
+    outs:
+    - path: app/models/best_model.pkl
+      hash: md5
+      md5: 7d2897e64edc8ce818e13582cc592788
+      size: 13691
+    - path: metrics/final_test_metrics.json
+      hash: md5
+      md5: a3015c1c695d8bbe98d7adb3210d5589
+      size: 154

@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Bureau/pcos_prediction_mlops/mlruns/686389845674677358/52783f6cf88146b89aa39936c63aa9e7/artifacts
+end_time: 1765173229311
+entry_point_name: ''
+experiment_id: '686389845674677358'
+lifecycle_stage: active
+run_id: 52783f6cf88146b89aa39936c63aa9e7
+run_name: LogisticRegression_Validation
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765173226266
+status: 3
+tags: []
+user_id: lando

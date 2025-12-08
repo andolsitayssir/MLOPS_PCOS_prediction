@@ -17,3 +17,4 @@ evidently
 pytest
 httpx
 pydantic
+mlflow>=2.11

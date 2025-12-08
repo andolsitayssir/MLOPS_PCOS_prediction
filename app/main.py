@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 import os
 import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 # --- Logging Configuration ---
 # Replaced print statements with structured logging for Semaine 7 requirement
@@ -64,6 +65,14 @@ app = FastAPI(
     description="Production-ready API for PCOS diagnosis.",
     version="1.0.0",
     lifespan=lifespan
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8000", "http://localhost:8000", "*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # --- 4. Endpoints ---
@@ -151,7 +160,7 @@ def predict(data: PatientData):
                     feature_contribs.append({"feature": col, "impact": float(val)})
 
                 feature_contribs.sort(key=lambda x: abs(x['impact']), reverse=True)
-                top_contributors = feature_contribs[:3]
+                top_contributors = feature_contribs[:4]
                 explanation = top_contributors
                 
         except Exception as ex:

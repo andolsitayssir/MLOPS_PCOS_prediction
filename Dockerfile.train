@@ -2,17 +2,15 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Install git and dvc dependencies
+# Install git (needed for DVC)
 RUN apt-get update && apt-get install -y git
 
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all code
+# Copy project files
 COPY . .
 
-# Initialize DVC (if needed, but usually we mount the .dvc folder)
-# We expect the user to mount the volume or we copy everything
-# output: "Ready to repro"
-
+# Default command: Run the pipeline
 CMD ["dvc", "repro"]

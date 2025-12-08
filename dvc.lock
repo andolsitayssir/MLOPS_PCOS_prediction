@@ -141,8 +141,8 @@ stages:
       size: 521
     - path: src/train_validation.py
       hash: md5
-      md5: a43fd99598eaf1407af4d760946893f9
-      size: 6720
+      md5: bb7b3bca1505dfd813c89c05427c57d3
+      size: 6716
     params:
       params.yaml:
         model_training:
@@ -214,3 +214,36 @@ stages:
       hash: md5
       md5: a3015c1c695d8bbe98d7adb3210d5589
       size: 154
+  reporting:
+    cmd: mkdir notebooks\reports 2>NUL & papermill 
+      notebooks/01_automated_report.ipynb notebooks/reports/final_report.ipynb
+    deps:
+    - path: data/processed/pcos_train.csv
+      hash: md5
+      md5: 12f21a45bf8f926315f92ba0846e91c9
+      size: 72057
+    - path: metrics/best_model_info.json
+      hash: md5
+      md5: d13b9a2e0b99d5ce4788ed4583832301
+      size: 752
+    - path: metrics/final_test_metrics.json
+      hash: md5
+      md5: a3015c1c695d8bbe98d7adb3210d5589
+      size: 154
+    - path: metrics/validation_metrics.json
+      hash: md5
+      md5: 9cd4256b03aec5edf9101aa8d3c8ba47
+      size: 570
+    - path: notebooks/01_automated_report.ipynb
+      hash: md5
+      md5: ed4aa67b85504f5fd2b9989e3fd45be5
+      size: 7738
+    - path: notebooks/01_automated_report.ipynb
+      hash: md5
+      md5: ed4aa67b85504f5fd2b9989e3fd45be5
+      size: 7738
+    outs:
+    - path: notebooks/reports/final_report.ipynb
+      hash: md5
+      md5: 762eca2d243dd0f787010b3836ced9bb
+      size: 195159

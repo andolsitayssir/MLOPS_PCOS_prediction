@@ -148,7 +148,7 @@ def main():
     
     # Trouver meilleur modèle
     best_model_name = max(all_results, key=lambda x: all_results[x][params['primary_metric']])
-    print(f"\n🏆 MEILLEUR MODÈLE: {best_model_name}")
+    print(f"\n MEILLEUR MODÈLE: {best_model_name}")
     print(f"   {params['primary_metric']}: {all_results[best_model_name][params['primary_metric']]:.4f}")
     
     # Sauvegarder info du meilleur

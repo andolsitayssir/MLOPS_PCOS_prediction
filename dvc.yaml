@@ -53,3 +53,14 @@ stages:
       - app/models/best_model.pkl
     metrics:
       - metrics/final_test_metrics.json 
+  reporting:
+    cmd: mkdir notebooks\reports 2>NUL & papermill notebooks/01_automated_report.ipynb notebooks/reports/final_report.ipynb   
+    deps:  
+      - data/processed/pcos_train.csv
+      - notebooks/01_automated_report.ipynb
+      - notebooks/01_automated_report.ipynb
+      - metrics/validation_metrics.json
+      - metrics/final_test_metrics.json
+      - metrics/best_model_info.json
+    outs:
+      - notebooks/reports/final_report.ipynb   

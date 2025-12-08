@@ -1,5 +1,26 @@
+# System
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Environments
 mlops_pcos/
+.venv/
+env/
+venv/
 
+# Logs & Metrics
 *.log
+mlruns
+logs/
 
-/metrics.json
+# Notebooks
+.ipynb_checkpoints/
+
+# DVC (Auto-generated)
+
+
+# IDE
+.vscode/
+.idea/
+
